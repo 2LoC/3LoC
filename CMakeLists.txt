@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
-project(tlocEngine VERSION 0.1 LANGUAGES CXX)
+project(tlocEngineSuper)
 
 enable_testing()
-#add_subdirectory(src)
-
 include(ExternalProject)
+
+###-------------------------------------------------###
+
 ExternalProject_Add(glfw
   GIT_REPOSITORY "https://github.com/glfw/glfw.git"
   GIT_TAG "master"
@@ -18,7 +19,11 @@ ExternalProject_Add(glfw
 set(GLFW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/glfw/include/")
 set(GLFW_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/glfw/lib/")
 
-include(ExternalProject)
+find_library(GLFW_LIB_D  glfw3_d ${GLFW_LIBRARY_DIR})
+find_library(GLFW_LIB    glfw3   ${GLFW_LIBRARY_DIR})
+
+###-------------------------------------------------###
+
 ExternalProject_Add(eigen
   GIT_REPOSITORY "https://github.com/RLovelett/eigen.git"
   GIT_TAG "master"
@@ -28,32 +33,72 @@ ExternalProject_Add(eigen
 
   TEST_COMMAND ""
   )
-
 set(EIGEN_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/eigen/include/eigen3")
 
-find_library(GLFW_LIB_D  glfw3_d ${GLFW_LIBRARY_DIR})
-find_library(GLFW_LIB    glfw3   ${GLFW_LIBRARY_DIR})
-find_package(VULKAN)
+###-------------------------------------------------###
+
+ExternalProject_Add(bgfx
+  GIT_REPOSITORY "https://github.com/JoshuaBrookover/bgfx.cmake.git"
+  GIT_TAG "master"
+
+  SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/bgfx"
+  CMAKE_ARGS -DBGFX_BUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/install/bgfx/ -DCMAKE_DEBUG_POSTFIX=_d
+
+  TEST_COMMAND ""
+  )
+
+set(BGFX_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/bgfx/include/")
+set(BGFX_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/bgfx/lib/")
+
+find_library(BGFX_LIB_D  bgfx_d ${BGFX_LIBRARY_DIR})
+find_library(BGFX_LIB    bgfx   ${BGFX_LIBRARY_DIR})
+
+###-------------------------------------------------###
+
+include(ExternalProject)
+ExternalProject_Add(spdlog
+  GIT_REPOSITORY "https://github.com/gabime/spdlog.git"
+  GIT_TAG "master"
+
+  SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/spdlog"
+  CMAKE_ARGS -DBUILD_TESTING=OFF -DSPDLOG_BUILD_TESTING=OFF -DSPDLOG_BUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/install/spdlog/ -DCMAKE_DEBUG_POSTFIX=_d
+
+  TEST_COMMAND ""
+  )
+
+set(SPDLOG_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/spdlog/include/")
+
+###-------------------------------------------------###
+
+ExternalProject_Add(catch
+  GIT_REPOSITORY "https://github.com/samaursa/catch.git" 
+  GIT_TAG "master"
+
+  SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/catch"
+  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/install/catch/
+
+  TEST_COMMAND ""
+  )
+
+set(CATCH_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/catch/include/")
+
+###-------------------------------------------------###
+
+ExternalProject_Add(tloc
+  SOURCE_DIR "${CMAKE_SOURCE_DIR}/src/"
+
+  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/install/tloc/ -DCMAKE_DEBUG_POSTFIX=_d
+
+  TEST_COMMAND ""
+  )
+
+set(TLOC_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/tloc/include/")
+set(TLOC_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/tloc/lib/")
+
+###-------------------------------------------------###
 
 include_directories(${GLFW_INCLUDE_DIR})
 include_directories(${EIGEN_INCLUDE_DIR})
-include_directories(${Vulkan_INCLUDE_DIR})
-
-add_executable(vk_test
-  src/vulkan_test.cpp
-  )
-target_link_libraries(vk_test debug ${GLFW_LIB_D} optimized ${GLFW_LIB})
-target_link_libraries(vk_test ${Vulkan_LIBRARY})
-
-# CMake has a bug where 32 bit Vulkan library is simply not picked up.
-# Not sure why this is - I have tried completely removing the lines for
-# the Bin folder so that only Bin32 is detected and STILL it selects Bin.
-# I debugged it with messages and somehow it is being set to Bin even though
-# the correct ELIF is being hit.
-# Quite frustrating.
-#
-# message(STATUS ${Vulkan_LIBRARY})
-
-
-add_dependencies(vk_test glfw)
-add_dependencies(vk_test eigen)
+include_directories(${BGFX_INCLUDE_DIR})
+include_directories(${SPDLOG_INCLUDE_DIR})
+include_directories(${CATCH_INCLUDE_DIR})

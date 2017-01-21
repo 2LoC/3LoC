@@ -85,9 +85,9 @@ set(CATCH_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/catch/include/")
 ###-------------------------------------------------###
 
 ExternalProject_Add(tloc
-  SOURCE_DIR "${CMAKE_SOURCE_DIR}/src/"
+  SOURCE_DIR "${CMAKE_SOURCE_DIR}/engine/"
 
-  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/install/tloc/ -DCMAKE_DEBUG_POSTFIX=_d
+  CMAKE_ARGS -DTLOC_SUPERBUILD_DIR=${CMAKE_SOURCE_DIR} -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/install/tloc/ -DCMAKE_DEBUG_POSTFIX=_d
 
   TEST_COMMAND ""
   )

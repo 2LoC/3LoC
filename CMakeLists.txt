@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
-project(tlocEngineSuper)
+project(tloc_engine_superbuild)
 
 enable_testing()
 include(ExternalProject)
@@ -18,9 +18,6 @@ ExternalProject_Add(glfw
 
 set(GLFW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/glfw/include/")
 set(GLFW_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/glfw/lib/")
-
-find_library(GLFW_LIB_D  glfw3_d ${GLFW_LIBRARY_DIR})
-find_library(GLFW_LIB    glfw3   ${GLFW_LIBRARY_DIR})
 
 ###-------------------------------------------------###
 
@@ -49,9 +46,6 @@ ExternalProject_Add(bgfx
 
 set(BGFX_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/bgfx/include/")
 set(BGFX_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/bgfx/lib/")
-
-find_library(BGFX_LIB_D  bgfx_d ${BGFX_LIBRARY_DIR})
-find_library(BGFX_LIB    bgfx   ${BGFX_LIBRARY_DIR})
 
 ###-------------------------------------------------###
 
@@ -96,9 +90,48 @@ set(TLOC_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/tloc/include/")
 set(TLOC_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/tloc/lib/")
 
 ###-------------------------------------------------###
+### Dependencies
 
-include_directories(${GLFW_INCLUDE_DIR})
-include_directories(${EIGEN_INCLUDE_DIR})
-include_directories(${BGFX_INCLUDE_DIR})
-include_directories(${SPDLOG_INCLUDE_DIR})
-include_directories(${CATCH_INCLUDE_DIR})
+add_dependencies(tloc glfw)
+add_dependencies(tloc eigen)
+add_dependencies(tloc bgfx)
+add_dependencies(tloc spdlog)
+add_dependencies(tloc catch)
+
+###-------------------------------------------------###
+### Auto generate a helper file for use with 
+
+FILE(WRITE "install/tl_superbuild_paths.cmake"
+"\#\#\# ---------------------------------------------
+\#\#\# This is auto-generated to facilitate defining project variables
+
+\#\#\# ---------------------------------------------
+\#\#\# Include directories
+
+set(GLFW_INCLUDE_DIR    \"${GLFW_INCLUDE_DIR}\")
+set(EIGEN_INCLUDE_DIR   \"${EIGEN_INCLUDE_DIR}\")
+set(BGFX_INCLUDE_DIR    \"${BGFX_INCLUDE_DIR}\")
+set(SPDLOG_INCLUDE_DIR  \"${SPDLOG_INCLUDE_DIR}\")
+set(CATCH_INCLUDE_DIR   \"${CATCH_INCLUDE_DIR}\")
+set(TLOC_INCLUDE_DIR    \"${TLOC_INCLUDE_DIR}\")
+
+\#\#\# ---------------------------------------------
+\#\#\# Library directories
+
+set(GLFW_LIBRARY_DIR    \"${GLFW_LIBRARY_DIR}\")
+set(BGFX_LIBRARY_DIR    \"${BGFX_LIBRARY_DIR}\")
+set(TLOC_LIBRARY_DIR    \"${TLOC_LIBRARY_DIR}\")
+
+\#\#\# ---------------------------------------------
+\#\#\# Libraries
+
+find_library(GLFW_LIB_D  glfw3_d \"${GLFW_LIBRARY_DIR}\")
+find_library(GLFW_LIB    glfw3   \"${GLFW_LIBRARY_DIR}\")
+
+find_library(BGFX_LIB_D  bgfx_d \"${BGFX_LIBRARY_DIR}\")
+find_library(BGFX_LIB    bgfx   \"${BGFX_LIBRARY_DIR}\")
+
+set(TLOC_LIBS           \"tloc_engine\")
+set(TLOC_LIBS_D         \"tloc_engine_d\")
+
+")

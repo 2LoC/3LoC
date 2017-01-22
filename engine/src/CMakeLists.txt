@@ -1,18 +1,38 @@
+#-----------------------------------------------
+# Autogenerate tloc_engine.h
+
 include(tloc_autogen.cmake)
 set(INCLUDE_DIR "include")
 
-set(TL_CORE
-  ${INCLUDE_DIR}/tl_defines.h
+#-----------------------------------------------
+# Include directories
+
+include_directories(${GLFW_INCLUDE_DIR})
+include_directories(${EIGEN_INCLUDE_DIR})
+include_directories(${BGFX_INCLUDE_DIR})
+include_directories(${SPDLOG_INCLUDE_DIR})
+
+#-----------------------------------------------
+# Source files
+
+set(TLOC_CORE
+  ${INCLUDE_DIR}/tloc_defines.h
   )
-set(TL_GFX
-  ${INCLUDE_DIR}/tl_window.h
-  ${INCLUDE_DIR}/tl_window.cpp
+set(TLOC_GFX
+  ${INCLUDE_DIR}/tloc_window.h
+  ${INCLUDE_DIR}/tloc_window.cpp
   )
 
-add_library(tl_engine
-  ${TL_CORE}
-  ${TL_GFX}
+#-----------------------------------------------
+# Engine library
+
+add_library(tloc_engine
+  ${TLOC_CORE}
+  ${TLOC_GFX}
   )
 
-SOURCE_GROUP(core FILES ${TL_CORE})
-SOURCE_GROUP(gfx  FILES ${TL_GFX})
+#-----------------------------------------------
+# Organization
+
+SOURCE_GROUP(core FILES ${TLOC_CORE})
+SOURCE_GROUP(gfx  FILES ${TLOC_GFX})

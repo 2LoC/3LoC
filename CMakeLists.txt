@@ -35,7 +35,7 @@ set(EIGEN_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/eigen/include/eigen3")
 ###-------------------------------------------------###
 
 ExternalProject_Add(bgfx
-  GIT_REPOSITORY "https://github.com/JoshuaBrookover/bgfx.cmake.git"
+  GIT_REPOSITORY "https://github.com/samaursa/bgfx.cmake.git"
   GIT_TAG "master"
 
   SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/bgfx"

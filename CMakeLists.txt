@@ -4,6 +4,8 @@ project(tloc_engine_superbuild)
 enable_testing()
 include(ExternalProject)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
+
 ###-------------------------------------------------###
 
 ExternalProject_Add(glfw

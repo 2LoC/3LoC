@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(tloc_engine VERSION 0.1 LANGUAGES CXX)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
+
 # These variables are usually set by the super build
 if(NOT TLOC_SUPERBUILD_DIR)
   get_filename_component(TLOC_SUPERBUILD_DIR "${CMAKE_SOURCE_DIR}/../" REALPATH)
@@ -24,6 +26,10 @@ else()
 endif()
 
 message(STATUS "###----------------------------------------------###")
+
+if(UNIX)
+    include_directories("/usr/include/c++/${CMAKE_CXX_COMPILER_VERSION}")
+endif()
 
 # Add the engine src directory
 add_subdirectory(src)

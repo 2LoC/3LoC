@@ -5,5 +5,5 @@
 
 namespace tloc
 {
-    GLFWwindow* window;
+  GLFWwindow* window;
 };

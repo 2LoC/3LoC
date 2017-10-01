@@ -4,3 +4,4 @@ install/
 tloc_engine.h
 *.swp
 *kdev*
+*compile_commands.json*

@@ -67,7 +67,7 @@ set(SPDLOG_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/spdlog/include/")
 ###-------------------------------------------------###
 
 ExternalProject_Add(catch
-  GIT_REPOSITORY "https://github.com/samaursa/catch.git" 
+  GIT_REPOSITORY "https://github.com/samaursa/catch.git"
   GIT_TAG "master"
 
   SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/catch"
@@ -101,7 +101,7 @@ add_dependencies(tloc spdlog)
 add_dependencies(tloc catch)
 
 ###-------------------------------------------------###
-### Auto generate a helper file for use with 
+### Auto generate a helper file for use with
 
 FILE(WRITE "install/tl_superbuild_paths.cmake"
 "\#\#\# ---------------------------------------------

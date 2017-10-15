@@ -1,15 +1,9 @@
 #pragma once
 
-#include <vector>
-#include <string>
-#include <GLFW/glfw3.h>
-
 namespace tloc
 {
-  class MyClass
+  class Window
   {
     public:
-      std::vector<int> m;
-      std::string s;
   };
 };

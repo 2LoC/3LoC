@@ -11,6 +11,12 @@ include_directories(${GLFW_INCLUDE_DIR})
 include_directories(${EIGEN_INCLUDE_DIR})
 include_directories(${BGFX_INCLUDE_DIR})
 include_directories(${SPDLOG_INCLUDE_DIR})
+include_directories(${CATCH_INCLUDE_DIR})
+
+message(STATUS "GLFW LIBRARY: ${GLFW_LIBRARY_DIR}")
+link_directories(${GLFW_LIBRARY_DIR})
+link_directories(${BGFX_LIBRARY_DIR})
+link_directories(${TLOC_LIBRARY_DIR})
 
 #-----------------------------------------------
 # Source files
@@ -30,6 +36,11 @@ add_library(tloc_engine
   ${TLOC_CORE}
   ${TLOC_GFX}
   )
+
+add_executable(glfw_window
+  ${INCLUDE_DIR}/main.cpp
+  )
+target_link_libraries(glfw_window libglfw3.a pthread dl GLU GL rt Xrandr Xxf86vm Xi Xinerama X11)
 
 #-----------------------------------------------
 # Organization

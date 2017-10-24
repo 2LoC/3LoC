@@ -21,7 +21,7 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.8
-            - george-edison55-precise-backports 
+            - george-edison55-precise-backports
           packages:
             - clang-3.8
             - cmake
@@ -30,8 +30,11 @@ matrix:
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -y 
+  - sudo apt-get install -y
   - sudo apt-get install -y libglew-dev
+  - sudo apt-get install -y libx11-dev
+  - sudo apt-get install -y xorg-dev libglu1-mesa-dev
+
 
 script:
   - mkdir build

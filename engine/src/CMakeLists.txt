@@ -1,5 +1,5 @@
 #-----------------------------------------------
-# Autogenerate tloc_engine.h
+# Autogenerate tloc_autogen_engine.h
 
 include(tloc_autogen.cmake)
 set(INCLUDE_DIR "include")
@@ -23,6 +23,16 @@ link_directories(${TLOC_LIBRARY_DIR})
 
 set(TLOC_CORE
   ${INCLUDE_DIR}/tloc_defines.h
+  ${INCLUDE_DIR}/tloc_common.h
+  ${INCLUDE_DIR}/tloc_common.cpp
+  ${INCLUDE_DIR}/tloc_core.h
+  ${INCLUDE_DIR}/tloc_core.cpp
+  ${INCLUDE_DIR}/tloc_exception.h
+  ${INCLUDE_DIR}/tloc_exception.cpp
+  ${INCLUDE_DIR}/tloc_engine.h
+  ${INCLUDE_DIR}/tloc_engine.cpp
+  ${INCLUDE_DIR}/tloc_forward_decls.h
+  ${INCLUDE_DIR}/tloc_forward_decls.cpp
   )
 set(TLOC_GFX
   ${INCLUDE_DIR}/tloc_window.h

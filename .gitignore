@@ -1,8 +1,11 @@
 dep/
 build/
 install/
-tloc_engine.h
+tloc_auto*
 *.swp
 *kdev*
 *compile_commands.json*
 .ycm_extra_conf.py
+tags
+.undo*
+Session.vim

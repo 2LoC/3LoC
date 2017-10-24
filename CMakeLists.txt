@@ -4,6 +4,9 @@ project(tloc_engine_superbuild)
 enable_testing()
 include(ExternalProject)
 
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
 
 ###-------------------------------------------------###
@@ -110,12 +113,12 @@ FILE(WRITE "install/tl_superbuild_paths.cmake"
 \#\#\# ---------------------------------------------
 \#\#\# Include directories
 
-set(GLFW_INCLUDE_DIR    \"${GLFW_INCLUDE_DIR}\")
-set(EIGEN_INCLUDE_DIR   \"${EIGEN_INCLUDE_DIR}\")
-set(BGFX_INCLUDE_DIR    \"${BGFX_INCLUDE_DIR}\")
-set(SPDLOG_INCLUDE_DIR  \"${SPDLOG_INCLUDE_DIR}\")
-set(CATCH_INCLUDE_DIR   \"${CATCH_INCLUDE_DIR}\")
-set(TLOC_INCLUDE_DIR    \"${TLOC_INCLUDE_DIR}\")
+set(GLFW_INCLUDE_DIR          \"${GLFW_INCLUDE_DIR}\")
+set(EIGEN_INCLUDE_DIR         \"${EIGEN_INCLUDE_DIR}\")
+set(BGFX_INCLUDE_DIR          \"${BGFX_INCLUDE_DIR}\")
+set(SPDLOG_INCLUDE_DIR        \"${SPDLOG_INCLUDE_DIR}\")
+set(CATCH_INCLUDE_DIR         \"${CATCH_INCLUDE_DIR}\")
+set(TLOC_INCLUDE_DIR          \"${TLOC_INCLUDE_DIR}\")
 
 \#\#\# ---------------------------------------------
 \#\#\# Library directories

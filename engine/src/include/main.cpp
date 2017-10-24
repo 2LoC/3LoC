@@ -1,7 +1,6 @@
-#include <GLFW/glfw3.h>
+#include "tloc_window.h"
 
 int main()
 {
-  glfwCreateWindow(640, 480, "Test", nullptr, nullptr);
   return 0;
 }

@@ -33,6 +33,9 @@ set(TLOC_CORE
   ${INCLUDE_DIR}/tloc_engine.cpp
   ${INCLUDE_DIR}/tloc_forward_decls.h
   ${INCLUDE_DIR}/tloc_forward_decls.cpp
+  ${INCLUDE_DIR}/tloc_utils.h
+  ${INCLUDE_DIR}/tloc_utils.cpp
+  ${INCLUDE_DIR}/tloc_no_optimize.h
   )
 set(TLOC_GFX
   ${INCLUDE_DIR}/tloc_window.h

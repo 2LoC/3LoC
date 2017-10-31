@@ -6,6 +6,8 @@
 
 namespace tloc {
 
+	//-------------------------------------------------------------------------
+
   class window_params
   {
     public:
@@ -19,6 +21,8 @@ namespace tloc {
 			TLOC_DECL_PARAM_VAR_REF(std::string, name, m_name);
   };
 
+	//-------------------------------------------------------------------------
+
   class window
   {
     public:
@@ -27,12 +31,16 @@ namespace tloc {
       window(engine_ptr a_engine, const window_params& a_params);
       ~window();
 
-      void create(int a_width, int a_height, const std::string& a_name);
       void make_context_current();
+			void swap_buffers();
+			void poll_events();
 
     private:
       TLOC_POINTER_IMPL(window_impl) m_impl;
   };
+
+	TLOC_TYPEDEF_SHARED_PTR(window);
+	TLOC_TYPEDEF_UNIQUE_PTR(window);
 
 };
 

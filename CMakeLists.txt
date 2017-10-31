@@ -21,6 +21,7 @@ ExternalProject_Add(glfw
   TEST_COMMAND ""
   )
 
+set(GLFW_INSTALL_DIR "${CMAKE_SOURCE_DIR}/install/glfw/")
 set(GLFW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/glfw/include/")
 set(GLFW_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/glfw/lib/")
 
@@ -35,6 +36,8 @@ ExternalProject_Add(eigen
 
   TEST_COMMAND ""
   )
+
+set(EIGEN_INSTALL_DIR "${CMAKE_SOURCE_DIR}/install/eigen/")
 set(EIGEN_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/eigen/include/eigen3")
 
 ###-------------------------------------------------###
@@ -49,6 +52,7 @@ ExternalProject_Add(bgfx
   TEST_COMMAND ""
   )
 
+set(BGFX_INSTALL_DIR "${CMAKE_SOURCE_DIR}/install/bgfx/")
 set(BGFX_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/bgfx/include/")
 set(BGFX_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/bgfx/lib/")
 
@@ -65,7 +69,8 @@ ExternalProject_Add(spdlog
   TEST_COMMAND ""
   )
 
-set(SPDLOG_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/spdlog/include/")
+set(SPDLOG_INSTALL_DIR "${CMAKE_SOURCE_DIR}/install/spdlog/")
+#set(SPDLOG_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/spdlog/include/")
 
 ###-------------------------------------------------###
 
@@ -79,6 +84,7 @@ ExternalProject_Add(catch
   TEST_COMMAND ""
   )
 
+set(CATCH_INSTALL_DIR "${CMAKE_SOURCE_DIR}/install/catch/")
 set(CATCH_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/catch/include/")
 
 ###-------------------------------------------------###
@@ -91,6 +97,7 @@ ExternalProject_Add(tloc
   TEST_COMMAND ""
   )
 
+set(TLOC_INSTALL_DIR "${CMAKE_SOURCE_DIR}/install/tloc/")
 set(TLOC_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/tloc/include/")
 set(TLOC_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/tloc/lib/")
 
@@ -109,6 +116,16 @@ add_dependencies(tloc catch)
 FILE(WRITE "install/tl_superbuild_paths.cmake"
 "\#\#\# ---------------------------------------------
 \#\#\# This is auto-generated to facilitate defining project variables
+
+\#\#\# ---------------------------------------------
+\#\#\# Install directories
+
+set(GLFW_INSTALL_DIR          \"${GLFW_INSTALL_DIR}\")
+set(EIGEN_INSTALL_DIR         \"${EIGEN_INSTALL_DIR}\")
+set(BGFX_INSTALL_DIR          \"${BGFX_INSTALL_DIR}\")
+set(SPDLOG_INSTALL_DIR        \"${SPDLOG_INSTALL_DIR}\")
+set(CATCH_INSTALL_DIR         \"${CATCH_INSTALL_DIR}\")
+set(TLOC_INSTALL_DIR          \"${TLOC_INSTALL_DIR}\")
 
 \#\#\# ---------------------------------------------
 \#\#\# Include directories

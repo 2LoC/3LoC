@@ -5,37 +5,25 @@ include(tloc_autogen.cmake)
 set(INCLUDE_DIR "include")
 
 #-----------------------------------------------
-# Include directories
-
-include_directories(${GLFW_INCLUDE_DIR})
-include_directories(${EIGEN_INCLUDE_DIR})
-include_directories(${BGFX_INCLUDE_DIR})
-include_directories(${SPDLOG_INCLUDE_DIR})
-include_directories(${CATCH_INCLUDE_DIR})
-
-message(STATUS "GLFW LIBRARY: ${GLFW_LIBRARY_DIR}")
-link_directories(${GLFW_LIBRARY_DIR})
-link_directories(${BGFX_LIBRARY_DIR})
-link_directories(${TLOC_LIBRARY_DIR})
-
-#-----------------------------------------------
 # Source files
 
 set(TLOC_CORE
-  ${INCLUDE_DIR}/tloc_defines.h
   ${INCLUDE_DIR}/tloc_common.h
   ${INCLUDE_DIR}/tloc_common.cpp
   ${INCLUDE_DIR}/tloc_core.h
   ${INCLUDE_DIR}/tloc_core.cpp
+  ${INCLUDE_DIR}/tloc_defines.h
   ${INCLUDE_DIR}/tloc_exception.h
   ${INCLUDE_DIR}/tloc_exception.cpp
   ${INCLUDE_DIR}/tloc_engine.h
   ${INCLUDE_DIR}/tloc_engine.cpp
   ${INCLUDE_DIR}/tloc_forward_decls.h
   ${INCLUDE_DIR}/tloc_forward_decls.cpp
+  ${INCLUDE_DIR}/tloc_no_optimize.h
+  ${INCLUDE_DIR}/tloc_platform.h
+  ${INCLUDE_DIR}/tloc_platform.cpp
   ${INCLUDE_DIR}/tloc_utils.h
   ${INCLUDE_DIR}/tloc_utils.cpp
-  ${INCLUDE_DIR}/tloc_no_optimize.h
   )
 set(TLOC_GFX
   ${INCLUDE_DIR}/tloc_window.h
@@ -50,10 +38,31 @@ add_library(tloc_engine
   ${TLOC_GFX}
   )
 
+find_package(glfw3 HINTS ${GLFW_INSTALL_DIR} REQUIRED)
+find_package(Eigen3 HINTS ${EIGEN_INSTALL_DIR} REQUIRED)
+
+target_include_directories(tloc_engine
+  PRIVATE
+    glfw
+    Eigen3
+  )
+
+target_link_libraries(tloc_engine
+  PRIVATE
+    glfw
+  )
+
+#-----------------------------------------------
+# Testing
+
 add_executable(glfw_window
   ${INCLUDE_DIR}/main.cpp
   )
-target_link_libraries(glfw_window libglfw3.a pthread dl GLU GL rt Xrandr Xxf86vm Xi Xinerama X11)
+
+target_link_libraries(glfw_window
+  PRIVATE
+    tloc_engine
+  )
 
 #-----------------------------------------------
 # Organization

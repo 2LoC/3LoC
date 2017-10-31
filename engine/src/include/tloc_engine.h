@@ -10,6 +10,9 @@ namespace tloc {
       engine();
       ~engine();
   };
+
+  TLOC_TYPEDEF_SHARED_PTR(engine);
+  TLOC_TYPEDEF_UNIQUE_PTR(engine);
 };
 
 #include "tloc_exception.h"

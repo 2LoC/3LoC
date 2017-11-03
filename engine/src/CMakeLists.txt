@@ -38,28 +38,31 @@ add_library(tloc_engine
   ${TLOC_GFX}
   )
 
-find_package(glfw3 HINTS ${GLFW_INSTALL_DIR} REQUIRED)
-find_package(Eigen3 HINTS ${EIGEN_INSTALL_DIR} REQUIRED)
+find_package(SDL2 CONFIG HINTS ${SDL_INSTALL_DIR} REQUIRED)
+find_package(Eigen3 CONFIG HINTS ${EIGEN_INSTALL_DIR} REQUIRED)
+find_package(FMT CONFIG HINTS ${FMT_INSTALL_DIR} REQUIRED)
 
 target_include_directories(tloc_engine
   PRIVATE
-    glfw
-    Eigen3
+    ${SDL_INCLUDE_DIR}
+    ${EIGEN_INCLUDE_DIR}
+    ${FMT_INCLUDE_DIR}
   )
 
 target_link_libraries(tloc_engine
   PRIVATE
-    glfw
+  ${SDL_LIBRARY_DIR}/libSDL2.so
+  ${FMT_LIBRARY_DIR}/libfmt.a
   )
 
 #-----------------------------------------------
 # Testing
 
-add_executable(glfw_window
+add_executable(window
   ${INCLUDE_DIR}/main.cpp
   )
 
-target_link_libraries(glfw_window
+target_link_libraries(window
   PRIVATE
     tloc_engine
   )

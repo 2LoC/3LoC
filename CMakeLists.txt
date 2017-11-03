@@ -4,26 +4,26 @@ project(tloc_engine_superbuild)
 enable_testing()
 include(ExternalProject)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
 
 ###-------------------------------------------------###
 
-ExternalProject_Add(glfw
-  GIT_REPOSITORY "https://github.com/glfw/glfw.git"
+ExternalProject_Add(sdl
+  GIT_REPOSITORY "https://github.com/spurious/SDL-mirror"
   GIT_TAG "master"
 
-  SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/glfw"
-  CMAKE_ARGS -DGLFW_BUILD_DOCS=OFF -DGLFW_BUILD_TESTS=OFF -DGLFW_BUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/install/glfw/ -DCMAKE_DEBUG_POSTFIX=_d
+  SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/sdl"
+  CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/install/sdl/ -DCMAKE_DEBUG_POSTFIX=_d
 
   TEST_COMMAND ""
   )
 
-set(GLFW_INSTALL_DIR "${CMAKE_SOURCE_DIR}/install/glfw/")
-set(GLFW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/glfw/include/")
-set(GLFW_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/glfw/lib/")
+set(SDL_INSTALL_DIR "${CMAKE_SOURCE_DIR}/install/sdl/")
+set(SDL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/sdl/include/")
+set(SDL_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/sdl/lib/")
 
 ###-------------------------------------------------###
 
@@ -89,6 +89,22 @@ set(CATCH_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/catch/include/")
 
 ###-------------------------------------------------###
 
+ExternalProject_Add(fmt
+  GIT_REPOSITORY "https://github.com/fmtlib/fmt"
+  GIT_TAG "master"
+
+  SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/fmt"
+  CMAKE_ARGS -DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER} -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/install/fmt/ -DCMAKE_DEBUG_POSTFIX=_d
+
+  TEST_COMMAND ""
+  )
+
+set(FMT_INSTALL_DIR "${CMAKE_SOURCE_DIR}/install/fmt/")
+set(FMT_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/fmt/include/")
+set(FMT_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/fmt/lib/")
+
+###-------------------------------------------------###
+
 ExternalProject_Add(tloc
   SOURCE_DIR "${CMAKE_SOURCE_DIR}/engine/"
 
@@ -104,7 +120,7 @@ set(TLOC_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/tloc/lib/")
 ###-------------------------------------------------###
 ### Dependencies
 
-add_dependencies(tloc glfw)
+add_dependencies(tloc sdl)
 add_dependencies(tloc eigen)
 add_dependencies(tloc bgfx)
 add_dependencies(tloc spdlog)
@@ -120,38 +136,35 @@ FILE(WRITE "install/tl_superbuild_paths.cmake"
 \#\#\# ---------------------------------------------
 \#\#\# Install directories
 
-set(GLFW_INSTALL_DIR          \"${GLFW_INSTALL_DIR}\")
+set(SDL_INSTALL_DIR           \"${SDL_INSTALL_DIR}\")
 set(EIGEN_INSTALL_DIR         \"${EIGEN_INSTALL_DIR}\")
 set(BGFX_INSTALL_DIR          \"${BGFX_INSTALL_DIR}\")
 set(SPDLOG_INSTALL_DIR        \"${SPDLOG_INSTALL_DIR}\")
 set(CATCH_INSTALL_DIR         \"${CATCH_INSTALL_DIR}\")
+set(FMT_INSTALL_DIR           \"${FMT_INSTALL_DIR}\")
 set(TLOC_INSTALL_DIR          \"${TLOC_INSTALL_DIR}\")
 
 \#\#\# ---------------------------------------------
 \#\#\# Include directories
 
-set(GLFW_INCLUDE_DIR          \"${GLFW_INCLUDE_DIR}\")
+set(SDL_INCLUDE_DIR           \"${SDL_INCLUDE_DIR}\")
 set(EIGEN_INCLUDE_DIR         \"${EIGEN_INCLUDE_DIR}\")
 set(BGFX_INCLUDE_DIR          \"${BGFX_INCLUDE_DIR}\")
 set(SPDLOG_INCLUDE_DIR        \"${SPDLOG_INCLUDE_DIR}\")
 set(CATCH_INCLUDE_DIR         \"${CATCH_INCLUDE_DIR}\")
+set(FMT_INCLUDE_DIR           \"${FMT_INCLUDE_DIR}\")
 set(TLOC_INCLUDE_DIR          \"${TLOC_INCLUDE_DIR}\")
 
 \#\#\# ---------------------------------------------
 \#\#\# Library directories
 
-set(GLFW_LIBRARY_DIR    \"${GLFW_LIBRARY_DIR}\")
+set(SDL_LIBRARY_DIR     \"${SDL_LIBRARY_DIR}\")
 set(BGFX_LIBRARY_DIR    \"${BGFX_LIBRARY_DIR}\")
+set(FMT_LIBRARY_DIR     \"${FMT_LIBRARY_DIR}\")
 set(TLOC_LIBRARY_DIR    \"${TLOC_LIBRARY_DIR}\")
 
 \#\#\# ---------------------------------------------
 \#\#\# Libraries
-
-find_library(GLFW_LIB_D  glfw3_d \"${GLFW_LIBRARY_DIR}\")
-find_library(GLFW_LIB    glfw3   \"${GLFW_LIBRARY_DIR}\")
-
-find_library(BGFX_LIB_D  bgfx_d \"${BGFX_LIBRARY_DIR}\")
-find_library(BGFX_LIB    bgfx   \"${BGFX_LIBRARY_DIR}\")
 
 set(TLOC_LIBS           \"tloc_engine\")
 set(TLOC_LIBS_D         \"tloc_engine_d\")

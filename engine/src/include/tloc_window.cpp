@@ -1,9 +1,11 @@
 #include "tloc_window.h"
 
 #include <string>
-#include <GLFW/glfw3.h>
+#include <functional>
 
 #include "tloc_engine.h"
+#include <SDL2/SDL.h>
+#include <fmt/format.h>
 
 namespace tloc
 {
@@ -13,17 +15,19 @@ namespace tloc
     window_params()
     : m_width(640)
     , m_height(480)
+    , m_xPos(0)
+    , m_yPos(0)
     , m_name("2LoC Engine")
     { }
 
 	//-------------------------------------------------------------------------
 
-  struct glfw_window_deleter
+  template <typename F>
+  struct custom_deleter
   {
-    void operator()(GLFWwindow* a_window)
-    {
-      glfwDestroyWindow(a_window);
-    }
+    template <typename T>
+    void operator()(T* a_ptr)
+    { std::function<F>()(a_ptr); }
   };
 
 	//-------------------------------------------------------------------------
@@ -31,20 +35,22 @@ namespace tloc
   class window::window_impl
   {
     public:
-      using glfw_window_ptr = std::unique_ptr<GLFWwindow, glfw_window_deleter>;
+      using window_ptr  = std::unique_ptr
+        <SDL_Window, custom_deleter<decltype(SDL_DestroyWindow)>>;
+      using context_ptr = std::unique_ptr
+        <void, custom_deleter<decltype(SDL_GL_DeleteContext)>>;
 
     public:
       window_impl()
       { }
 
       bool is_window_initialized() const
-      {
-        return m_window != nullptr;
-      }
+      { return m_window != nullptr; }
 
     public:
-      engine_ptr      m_engine;
-      glfw_window_ptr m_window;
+      engine_ptr    m_engine;
+      window_ptr    m_window;
+      context_ptr   m_context;
   };
 
 	//-------------------------------------------------------------------------
@@ -55,15 +61,26 @@ namespace tloc
     {
       m_impl->m_engine = a_engine;
 
-      auto window = glfwCreateWindow(a_params.width(), a_params.height(),
-                                     a_params.name().c_str(), nullptr, nullptr);
+      auto window = SDL_CreateWindow(a_params.name().c_str(),
+                                     a_params.xPos(), a_params.yPos(),
+                                     a_params.width(), a_params.height(),
+                                     SDL_WINDOW_OPENGL);
       if (!window)
       {
         throw exceptions::window_initialization
-          ("Could not create window using glfwCreateWindow");
+          (fmt::format("SDL Error: {0}", SDL_GetError()).c_str());
       }
 
-      m_impl->m_window = window_impl::glfw_window_ptr(window);
+      auto context = SDL_GL_CreateContext(window);
+
+      if (!context)
+      {
+        throw exceptions::window_initialization
+          (fmt::format("SDL Error: {0}", SDL_GetError()).c_str());
+      }
+
+      m_impl->m_window = window_impl::window_ptr(window);
+      m_impl->m_context = window_impl::context_ptr(context);
       make_context_current();
     }
 
@@ -75,20 +92,19 @@ namespace tloc
     window::
     make_context_current()
     {
-      glfwMakeContextCurrent(m_impl->m_window.get());
+      SDL_GL_MakeCurrent(m_impl->m_window.get(), m_impl->m_context.get());
     }
 
   void
     window::
     swap_buffers()
     {
-      glfwSwapBuffers(m_impl->m_window.get());
+      SDL_GL_SwapWindow(m_impl->m_window.get());
     }
 
   void
     window::
     poll_events()
     {
-      glfwPollEvents();
     }
 };

@@ -18,6 +18,10 @@ namespace tloc {
 
 			TLOC_DECL_PARAM_VAR(int, width, m_width);
 			TLOC_DECL_PARAM_VAR(int, height, m_height);
+
+			TLOC_DECL_PARAM_VAR(int, xPos, m_xPos);
+			TLOC_DECL_PARAM_VAR(int, yPos, m_yPos);
+
 			TLOC_DECL_PARAM_VAR_REF(std::string, name, m_name);
   };
 

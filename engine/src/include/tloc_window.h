@@ -29,7 +29,8 @@ namespace tloc {
 
   class window
   {
-    public:
+		public:
+      using id = tl_uint;
 
     public:
       window(engine_ptr a_engine, const window_params& a_params);
@@ -37,14 +38,13 @@ namespace tloc {
 
       void make_context_current();
 			void swap_buffers();
-			void poll_events();
+      id   get_id() const;
 
     private:
       TLOC_POINTER_IMPL(window_impl) m_impl;
   };
 
 	TLOC_TYPEDEF_SHARED_PTR(window);
-	TLOC_TYPEDEF_UNIQUE_PTR(window);
 
 };
 

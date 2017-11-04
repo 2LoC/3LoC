@@ -10,7 +10,6 @@ int main()
 
   while(true)
   {
-    w->poll_events();
     w->swap_buffers();
   }
 

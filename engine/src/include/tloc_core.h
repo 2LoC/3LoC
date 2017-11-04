@@ -2,6 +2,8 @@
 
 #include <memory>
 
+#include "tloc_types.h"
+
 namespace tloc
 {
 #define TLOC_POINTER_IMPL(_name_)\
@@ -9,12 +11,12 @@ namespace tloc
   std::unique_ptr<_name_>
 
 #define TLOC_TYPEDEF_UNIQUE_PTR_NAME(_type_, _typedef_)\
-  typedef std::unique_ptr<_type_>  _typedef_##_uptr;\
-  typedef std::unique_ptr<const _type_>  const_##_typedef_##_uptr
+  using _typedef_##_uptr = std::unique_ptr<_type_>;\
+  using const_##_typedef_##_uptr = std::unique_ptr<const _type_>
 
 #define TLOC_TYPEDEF_SHARED_PTR_NAME(_type_, _typedef_)\
-  typedef std::shared_ptr<_type_>  _typedef_##_sptr;\
-  typedef std::shared_ptr<const _type_>  const_##_typedef_##_sptr
+  using _typedef_##_sptr = std::shared_ptr<_type_>;\
+  using const_##_typedef_##_sptr = std::shared_ptr<const _type_>
 
 #define TLOC_TYPEDEF_UNIQUE_PTR(_type_)\
 	TLOC_TYPEDEF_UNIQUE_PTR_NAME(_type_, _type_)

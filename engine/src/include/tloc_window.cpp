@@ -47,6 +47,9 @@ namespace tloc
       bool is_window_initialized() const
       { return m_window != nullptr; }
 
+      SDL_Window* get_window_rptr() { return m_window.get(); }
+      SDL_GLContext get_context_rptr() { return m_context.get(); }
+
     public:
       engine_ptr    m_engine;
       window_ptr    m_window;
@@ -92,19 +95,20 @@ namespace tloc
     window::
     make_context_current()
     {
-      SDL_GL_MakeCurrent(m_impl->m_window.get(), m_impl->m_context.get());
+      SDL_GL_MakeCurrent(m_impl->get_window_rptr(), m_impl->get_context_rptr());
     }
 
   void
     window::
     swap_buffers()
     {
-      SDL_GL_SwapWindow(m_impl->m_window.get());
+      SDL_GL_SwapWindow(m_impl->get_window_rptr());
     }
 
-  void
+  window::id
     window::
-    poll_events()
+    get_id() const
     {
+      return SDL_GetWindowID(m_impl->get_window_rptr());
     }
 };

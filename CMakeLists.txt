@@ -105,6 +105,21 @@ set(FMT_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/fmt/lib/")
 
 ###-------------------------------------------------###
 
+ExternalProject_Add(nano
+  GIT_REPOSITORY "https://github.com/samaursa/nano-signal-slot"
+  GIT_TAG "master"
+
+  SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/nano"
+  CMAKE_ARGS -DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER} -DCMAKE_INSTALL_PREFIX=${CMAKE_SOURCE_DIR}/install/nano/
+
+  TEST_COMMAND ""
+  )
+
+set(NANO_INSTALL_DIR "${CMAKE_SOURCE_DIR}/install/nano/")
+set(NANO_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/nano/include/")
+
+###-------------------------------------------------###
+
 ExternalProject_Add(tloc
   SOURCE_DIR "${CMAKE_SOURCE_DIR}/engine/"
 
@@ -142,6 +157,7 @@ set(BGFX_INSTALL_DIR          \"${BGFX_INSTALL_DIR}\")
 set(SPDLOG_INSTALL_DIR        \"${SPDLOG_INSTALL_DIR}\")
 set(CATCH_INSTALL_DIR         \"${CATCH_INSTALL_DIR}\")
 set(FMT_INSTALL_DIR           \"${FMT_INSTALL_DIR}\")
+set(NANO_INSTALL_DIR          \"${NANO_INSTALL_DIR}\")
 set(TLOC_INSTALL_DIR          \"${TLOC_INSTALL_DIR}\")
 
 \#\#\# ---------------------------------------------
@@ -153,6 +169,7 @@ set(BGFX_INCLUDE_DIR          \"${BGFX_INCLUDE_DIR}\")
 set(SPDLOG_INCLUDE_DIR        \"${SPDLOG_INCLUDE_DIR}\")
 set(CATCH_INCLUDE_DIR         \"${CATCH_INCLUDE_DIR}\")
 set(FMT_INCLUDE_DIR           \"${FMT_INCLUDE_DIR}\")
+set(NANO_INCLUDE_DIR          \"${NANO_INCLUDE_DIR}\")
 set(TLOC_INCLUDE_DIR          \"${TLOC_INCLUDE_DIR}\")
 
 \#\#\# ---------------------------------------------

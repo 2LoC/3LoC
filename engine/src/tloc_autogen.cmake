@@ -9,8 +9,6 @@ file (WRITE "include/${TLOC_AUTO_ENGINE_H}"
 "
 )
 
-MESSAGE(STATUS "All headers: ${TLOC_HEADERS}")
-
 foreach(HEADER ${TLOC_HEADERS})
   file(APPEND "include/${TLOC_AUTO_ENGINE_H}"
     "#include \"${HEADER}\"\n")

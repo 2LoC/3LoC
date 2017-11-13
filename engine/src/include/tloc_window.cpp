@@ -3,7 +3,6 @@
 #include <string>
 #include <functional>
 
-#include "tloc_engine.h"
 #include <SDL2/SDL.h>
 #include <fmt/format.h>
 
@@ -32,6 +31,24 @@ namespace tloc
 
 	//-------------------------------------------------------------------------
 
+  struct sdl_video_subsystem
+  {
+    public:
+      sdl_video_subsystem()
+      {
+        if (SDL_InitSubSystem(SDL_INIT_VIDEO) != 0)
+        {
+          throw exceptions::window_initialization
+            (fmt::format("SDL Error: {0}", SDL_GetError()).c_str());
+        }
+      }
+
+      ~sdl_video_subsystem()
+      { SDL_QuitSubSystem(SDL_INIT_VIDEO); }
+  };
+
+	//-------------------------------------------------------------------------
+
   class window::window_impl
   {
     public:
@@ -51,7 +68,6 @@ namespace tloc
       SDL_GLContext get_context_rptr() { return m_context.get(); }
 
     public:
-      engine_ptr    m_engine;
       window_ptr    m_window;
       context_ptr   m_context;
   };
@@ -59,11 +75,9 @@ namespace tloc
 	//-------------------------------------------------------------------------
 
   window::
-    window(engine_ptr a_engine, const window_params& a_params)
+    window(const window_params& a_params)
     : m_impl(std::make_unique<window_impl>())
     {
-      m_impl->m_engine = a_engine;
-
       auto window = SDL_CreateWindow(a_params.name().c_str(),
                                      a_params.xPos(), a_params.yPos(),
                                      a_params.width(), a_params.height(),

@@ -41,6 +41,9 @@ set(TLOC_CORE
 set(TLOC_GFX
   ${INCLUDE_DIR}/tloc_window.h
   ${INCLUDE_DIR}/tloc_window.cpp
+
+  ${INCLUDE_DIR}/tloc_window_events.h
+  ${INCLUDE_DIR}/tloc_window_events.cpp
   )
 
 #-----------------------------------------------

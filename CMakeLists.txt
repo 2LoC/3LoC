@@ -43,7 +43,7 @@ set(EIGEN_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/install/eigen/include/eigen3")
 ###-------------------------------------------------###
 
 ExternalProject_Add(bgfx
-  GIT_REPOSITORY "https://github.com/samaursa/bgfx.cmake.git"
+  GIT_REPOSITORY "https://github.com/2LoC/dep_bgfx.cmake.git"
   GIT_TAG "master"
 
   SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/bgfx"
@@ -75,7 +75,7 @@ set(SPDLOG_INSTALL_DIR "${CMAKE_SOURCE_DIR}/install/spdlog/")
 ###-------------------------------------------------###
 
 ExternalProject_Add(catch
-  GIT_REPOSITORY "https://github.com/samaursa/catch.git"
+  GIT_REPOSITORY "https://github.com/2LoC/dep_catch.git"
   GIT_TAG "master"
 
   SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/catch"
@@ -106,7 +106,7 @@ set(FMT_LIBRARY_DIR "${CMAKE_SOURCE_DIR}/install/fmt/lib/")
 ###-------------------------------------------------###
 
 ExternalProject_Add(nano
-  GIT_REPOSITORY "https://github.com/samaursa/nano-signal-slot"
+  GIT_REPOSITORY "https://github.com/2LoC/dep_nano-signal-slot"
   GIT_TAG "master"
 
   SOURCE_DIR "${CMAKE_SOURCE_DIR}/dep/nano"

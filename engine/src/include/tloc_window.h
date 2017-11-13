@@ -1,7 +1,6 @@
 #pragma once
 
 #include "tloc_core.h"
-#include "tloc_forward_decls.h"
 #include "tloc_utils.h"
 
 namespace tloc {
@@ -33,7 +32,7 @@ namespace tloc {
       using id = tl_uint;
 
     public:
-      window(engine_ptr a_engine, const window_params& a_params);
+      window(const window_params& a_params);
       ~window();
 
       void make_context_current();
@@ -52,6 +51,5 @@ namespace tloc {
 namespace tloc { namespace exceptions {
 
   TLOC_EXCEPTION_DEFINE(window_initialization);
-  TLOC_EXCEPTION_DEFINE(window_not_initialized);
 
 };};

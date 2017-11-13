@@ -5,8 +5,7 @@ int main()
 {
   using namespace tloc;
 
-  auto e = std::make_shared<engine>();
-  auto w = std::make_shared<window>(e, window_params());
+  auto w = std::make_shared<window>(window_params());
 
   while(true)
   {

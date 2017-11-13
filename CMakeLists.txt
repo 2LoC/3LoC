@@ -140,6 +140,8 @@ add_dependencies(tloc eigen)
 add_dependencies(tloc bgfx)
 add_dependencies(tloc spdlog)
 add_dependencies(tloc catch)
+add_dependencies(tloc nano)
+add_dependencies(tloc fmt)
 
 ###-------------------------------------------------###
 ### Auto generate a helper file for use with
